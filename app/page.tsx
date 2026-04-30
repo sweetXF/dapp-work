@@ -1,7 +1,7 @@
 'use client';
 import { ConnectButton } from '@rainbow-me/rainbowkit';
 import { useState } from 'react';
-import { formatUnits, parseUnits } from 'viem';
+import { formatUnits, parseEther } from 'viem';
 import { useAccount, useBalance, useSendTransaction } from 'wagmi';
 
 export default function Home() {
@@ -16,12 +16,11 @@ export default function Home() {
   const handleETHAmountChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     let val = e.target.value;
     val = val.replace(/[^0-9.]/g, ''); // 只允许数字和小数点
-    console.log(val);
     const MAX_VALUE = 0.001; //限制发送ETH最大值为0.001ETH
     if (parseFloat(val) >= MAX_VALUE) val = MAX_VALUE.toString();
     if (parseFloat(val) <= 0) val = '0';
     setEthAmount(parseFloat(val));
-    console.log(parseUnits(parseFloat(val).toString(), 3));
+    console.log('input', val, parseFloat(val), parseEther(val));
   };
 
   // 发送 ETH
@@ -34,7 +33,7 @@ export default function Home() {
     sendTransaction(
       {
         to: ethToAddress as `0x${string}`,
-        value: parseUnits(ethAmount.toString(), 3),
+        value: parseEther(ethAmount.toString()),
       },
       {
         onSuccess: (hash) => {
