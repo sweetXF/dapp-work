@@ -7,7 +7,6 @@ import { useAccount, useBalance, useSendTransaction } from 'wagmi';
 export default function Home() {
   const { chain, chainId, isConnected, address } = useAccount();
   const { data: ethBalance } = useBalance({ address });
-
   const [ethToAddress, setEthToAddress] = useState('');
   const [ethAmount, setEthAmount] = useState(0);
   const [txMessage, setTxMessage] = useState('');
@@ -49,12 +48,8 @@ export default function Home() {
     );
   };
 
-  return (
-    <main className="space-y-6">
-      {/* 连接钱包按钮 */}
-      <div className="flex justify-center">
-        <ConnectButton />
-      </div>
+  const renderMyWallet = () => {
+    return (
       <div>
         {isConnected && (
           <div className="p-4 border rounded-lg">
@@ -66,25 +61,53 @@ export default function Home() {
           </div>
         )}
       </div>
+    );
+  };
+
+  const renderSendTranscation = () => {
+    return (
+      <>
+        <h1 className="font-semibold mb-2">发送 ETH</h1>
+        <input
+          type="text"
+          placeholder="接收地址"
+          className="border p-2 w-full"
+          value={ethToAddress}
+          onChange={(e) => setEthToAddress(e.target.value)}
+        />
+        <input type="number" placeholder="ETH数量" className="border p-2 w-full" value={ethAmount} onChange={handleETHAmountChange} />
+        <button className="bg-blue-500 text-white px-4 py-2 rounded disabled:opacity-50" disabled={isPending} onClick={handleSendETH}>
+          {isPending ? '等待签名中...' : '发送ETH'}
+        </button>
+      </>
+    );
+  };
+
+  const renderTranscationRes = () => {
+    return (
+      <>
+        {txMessage && <p className="text-sm text-gray-700 break-all">{txMessage}</p>}
+        {txHash && <p className="text-sm text-green-600 break-all">交易哈希：{txHash}</p>}
+      </>
+    );
+  };
+
+  return (
+    <main className="space-y-6">
+      {/* 连接钱包按钮 */}
+      <div className="flex justify-center">
+        <ConnectButton />
+      </div>
+      {/* 我的钱包信息 */}
+      {renderMyWallet()}
 
       <div className="space-y-4">
         {isConnected && (
           <div className="p-4 border rounded-lg space-y-2">
-            <h1 className="font-semibold mb-2">发送 ETH</h1>
-            <input
-              type="text"
-              placeholder="接收地址"
-              className="border p-2 w-full"
-              value={ethToAddress}
-              onChange={(e) => setEthToAddress(e.target.value)}
-            />
-            <input type="number" placeholder="ETH数量" className="border p-2 w-full" value={ethAmount} onChange={handleETHAmountChange} />
-            <button className="bg-blue-500 text-white px-4 py-2 rounded disabled:opacity-50" disabled={isPending} onClick={handleSendETH}>
-              {isPending ? '等待签名中...' : '发送ETH'}
-            </button>
-
-            {txMessage && <p className="text-sm text-gray-700 break-all">{txMessage}</p>}
-            {txHash && <p className="text-sm text-green-600 break-all">交易哈希：{txHash}</p>}
+            {/* 发送ETH */}
+            {renderSendTranscation()}
+            {/* 交易结果 */}
+            {renderTranscationRes()}
           </div>
         )}
       </div>
