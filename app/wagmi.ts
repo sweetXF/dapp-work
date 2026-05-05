@@ -1,6 +1,6 @@
 import { getDefaultConfig } from '@rainbow-me/rainbowkit';
 import { http } from 'wagmi';
-import { mainnet, sepolia } from 'wagmi/chains';
+import { sepolia } from 'wagmi/chains';
 
 const projectId = process.env.NEXT_PUBLIC_WALLETCONNECT_ID;
 
@@ -20,9 +20,9 @@ if (!/^[a-f0-9]{32}$/.test(projectId)) {
 export const config = getDefaultConfig({
   appName: 'My Dapp',
   projectId: projectId,
-  chains: [mainnet, sepolia],
+  chains: [sepolia],
   transports: {
-    [mainnet.id]: http('https://ethereum-rpc.publicnode.com'),
+    // [mainnet.id]: http('https://ethereum-rpc.publicnode.com'),
     [sepolia.id]: http('https://ethereum-sepolia-rpc.publicnode.com'),
   },
   ssr: true,

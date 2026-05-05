@@ -5,6 +5,7 @@ import SendETH from '@/components/sendETH';
 import { useAccount } from 'wagmi';
 import ERC20Balance from '@/components/ERC20Balance';
 import ERC20Transfer from '@/components/ERC20Transfer';
+import { ERC20TransferWatch } from '@/components/ERC20TransferWatch';
 
 export default function Home() {
   const { isConnected } = useAccount();
@@ -23,6 +24,7 @@ export default function Home() {
             <SendETH />
             <ERC20Balance />
             <ERC20Transfer />
+            <ERC20TransferWatch />
           </>
         ) : null}
       </div>

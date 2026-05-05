@@ -28,6 +28,7 @@ export default function ERC20Transfer() {
       },
       {
         onSuccess: (hash) => {
+          console.log('transfer', toAddress, amount, hash);
           setTxMessage(`交易成功，哈希：${hash}`);
         },
         onError: (error) => {
