@@ -1,6 +1,6 @@
 import { ERC20Abi } from '@/app/ERC20Abi';
 import { DECIMALS, ERC20_ADDRESS, TOKEN_SYMBOL } from '@/libs/myERC20';
-import { useEffect, useRef, useState } from 'react';
+import { useState } from 'react';
 import { formatUnits } from 'viem';
 import { useWatchContractEvent } from 'wagmi';
 
@@ -13,8 +13,6 @@ export function ERC20TransferWatch() {
       txHash: string;
     }>
   >([]);
-
-  //   const scrollRef = useRef<HTMLDivElement>(null);
 
   useWatchContractEvent({
     address: ERC20_ADDRESS,
@@ -33,17 +31,9 @@ export function ERC20TransferWatch() {
     },
   });
 
-  //   useEffect(() => {
-  //     if (scrollRef.current) {
-  //       console.log('scrollRef.current', scrollRef.current);
-  //       scrollRef.current.scrollTop = 0;
-  //     }
-  //   }, [eventList]);
-
   return (
     <div>
       <h3 className="font-semibold mb-2">实时 Transfer 事件</h3>
-      {/* ref={scrollRef} */}
       <div className="max-h-60 overflow-auto border rounded p-3 text-sm">
         {eventList.length === 0 ? (
           <p className="text-gray-500">暂无链上转账记录</p>
