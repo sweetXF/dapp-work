@@ -16,8 +16,9 @@ export default function Home() {
         <ConnectButton />
       </div>
       <div className="space-y-4">
-        {/* 我的钱包信息（查余额） */}
-        {/* 发送ETH到另一个账户地址 */}
+        {/* 我的钱包信息（查余额）CheckBalance */}
+        {/* 发送ETH到另一个账户地址SendETH */}
+        {/* 部署ERC20到sepolia后查代币余额、转账、监听转账事件 */}
         {isConnected ? (
           <>
             <CheckBalance />
